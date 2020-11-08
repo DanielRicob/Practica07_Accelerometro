@@ -12,6 +12,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensores;
     private Sensor sensor;
     private float X, Y, Z;
-    private TextView ValorX, ValorY, ValorZ, LogText;
+    private TextView ValorX, ValorY, ValorZ, LogText,nlatigo;
     private ScrollView scrollView;
     private int slatigo = 0;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ValorX = findViewById(R.id.textView4);
         ValorY = findViewById(R.id.textView6);
         ValorZ = findViewById(R.id.textView8);
+        nlatigo = findViewById(R.id.textView9);
 
 
         ValorX.setText("0");
@@ -66,15 +68,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 float x = sensorEvent.values[0];
-                System.out.println("valor giro " + x +" "+slatigo);
-                if(x<-5 && slatigo ==0) {
+               // System.out.println("valor giro " + x + " " + slatigo);
+                nlatigo.setText("n° =" + slatigo);
+                if (x < -8 && slatigo == 0) {
                     slatigo++;
-                    scrollView.setBackgroundColor(0X0000ff);
-                } else if ( x >5 && slatigo == 1) {
-                    slatigo++;
-                    scrollView.setBackgroundColor(0Xff0000);
                 }
-                if(slatigo ==2){ sound(); slatigo = 0;}
+                if (x <= 0 && slatigo == 1){
+                    scrollView.setBackgroundColor(Color.BLUE);
+            } else if ( x >8 && slatigo == 1) {
+                    slatigo++;
+                }
+                if(slatigo ==2){ scrollView.setBackgroundColor(Color.RED);
+                sound();
+                slatigo = 0;
+                }
             }
 
             @Override
